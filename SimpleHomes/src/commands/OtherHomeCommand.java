@@ -37,66 +37,69 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import SimpleHomes.SimpleHomes.SimpleHomes.SimpleHomes;
+import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import config.LanguageManager;
 import homes.HomeManager;
 import utils.UUIDManager;
 
 public class OtherHomeCommand implements CommandExecutor {
 
+	private SimpleHomes plugin;
     private final SimpleHomes simpleHomes;
     private final HomeManager homeManager;
-
-    public OtherHomeCommand(SimpleHomes plugin, HomeManager manager) {
-        simpleHomes = plugin;
-        homeManager = manager;
+        
+    	public OtherHomeCommand(SimpleHomes plugin, HomeManager manager){
+    		this.plugin = plugin;
+    		simpleHomes = plugin;
+            homeManager = manager;
+    		plugin.getCommand("otherhome").setExecutor(this);
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (sender instanceof Player) {
-            if (strings.length == 0) {
-                return false;
-            }
-            final Player player = (Player) sender;
-            final String homeName;
-            if (strings.length == 2) {
-                homeName = strings[1].toLowerCase();
-            } else {
-                homeName = "default";
-            }
-            final String targetName = strings[0].toLowerCase();
-            simpleHomes.getServer().getScheduler().runTaskAsynchronously(simpleHomes, new BukkitRunnable() {
-                UUID targetUUID;
-
-                @Override
-                public void run() {
-                    targetUUID = UUIDManager.getUUIDFromPlayer(targetName);
-                    if (targetUUID != null) {
-                        simpleHomes.getServer().getScheduler().runTask(simpleHomes, new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                Location location = homeManager.getPlayerHome(targetUUID, homeName);
-                                if (location == null) {
-                                    location = homeManager.getPlayerHomeFromFile(targetUUID, homeName);
-                                }
-                                if (location != null) {
-                                    player.teleport(location);
-                                    player.sendMessage(LanguageManager.TELEPORT_OTHERHOME.replaceAll("%p", targetName));
-                                } else {
-                                    player.sendMessage(LanguageManager.HOME_NOT_FOUND);
-                                }
-                            }
-                        });
-                    } else {
-                        player.sendMessage(LanguageManager.PLAYER_NOT_EXIST);
-                    }
+        @SuppressWarnings("deprecation")
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+            if (sender instanceof Player) {
+                if (strings.length == 0) {
+                    return false;
                 }
-            });
-        } else {
-            sender.sendMessage(LanguageManager.PLAYER_COMMAND_ONLY);
-        }
-        return true;
-    }
-}
+                final Player player = (Player) sender;
+                final String homeName;
+                if (strings.length == 2) {
+                    homeName = strings[1].toLowerCase();
+                } else {
+                    homeName = "default";
+                }
+                final String targetName = strings[0].toLowerCase();
+                simpleHomes.getServer().getScheduler().runTaskAsynchronously(simpleHomes, new BukkitRunnable() {
+                    UUID targetUUID;
 
+                    @Override
+                    public void run() {
+                        targetUUID = UUIDManager.getUUIDFromPlayer(targetName);
+                        if (targetUUID != null) {
+                            simpleHomes.getServer().getScheduler().runTask(simpleHomes, new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    Location location = homeManager.getPlayerHome(targetUUID, homeName);
+                                    if (location == null) {
+                                        location = homeManager.getPlayerHomeFromFile(targetUUID, homeName);
+                                    }
+                                    if (location != null) {
+                                        player.teleport(location);
+                                        player.sendMessage(LanguageManager.TELEPORT_OTHERHOME.replaceAll("%p", targetName));
+                                    } else {
+                                        player.sendMessage(LanguageManager.HOME_NOT_FOUND);
+                                    }
+                                }
+                            });
+                        } else {
+                            player.sendMessage(LanguageManager.PLAYER_NOT_EXIST);
+                        }
+                    }
+                });
+            } else {
+                sender.sendMessage(LanguageManager.PLAYER_COMMAND_ONLY);
+            }
+            return true;
+        }
+}

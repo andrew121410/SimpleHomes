@@ -33,15 +33,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import config.LanguageManager;
 import homes.HomeManager;
 
 public class DeleteHomeCommand implements CommandExecutor {
-
+	
+	private SimpleHomes plugin;
     private final HomeManager homeManager;
 
-    public DeleteHomeCommand(HomeManager manager) {
-        homeManager = manager;
+    //public DeleteHomeCommand(HomeManager manager) {
+        //homeManager = manager;
+        
+    	public DeleteHomeCommand(SimpleHomes plugin, HomeManager manager){
+    		this.plugin = plugin;
+            homeManager = manager;
+    		plugin.getCommand("delhome").setExecutor(this);
     }
 
     @Override

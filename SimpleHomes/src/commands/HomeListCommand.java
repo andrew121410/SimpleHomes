@@ -40,16 +40,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import config.LanguageManager;
 import homes.HomeManager;
 import utils.UUIDManager;
 
 public class HomeListCommand implements CommandExecutor {
 
+	private SimpleHomes plugin;
     private final HomeManager homeManager;
 
-    public HomeListCommand(HomeManager manager) {
+	public HomeListCommand(SimpleHomes plugin, HomeManager manager){
+		this.plugin = plugin;
         homeManager = manager;
+		plugin.getCommand("homelist").setExecutor(this);
     }
 
     @Override

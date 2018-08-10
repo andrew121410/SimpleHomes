@@ -44,7 +44,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.google.common.io.Files;
 
-import SimpleHomes.SimpleHomes.SimpleHomes.SimpleHomes;
+import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import utils.UUIDFetcher;
 
 public class HomeFileManager {

@@ -3,7 +3,7 @@ version: ${version}
 description: A Fork Of SimpleHomes But Better.
 authors: [Andrew121410]
 
-main: SimpleHomes.SimpleHomes.SimpleHomes.SimpleHomes
+main: SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes
 database: false
 
 commands:
