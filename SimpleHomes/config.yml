@@ -1,4 +1,4 @@
-ConfigVersion: 2
+ConfigVersion: 3
 MaxHomes: 1
 AutoUpdater:
   Enabled: true

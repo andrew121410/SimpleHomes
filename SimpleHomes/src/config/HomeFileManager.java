@@ -123,6 +123,8 @@ public class HomeFileManager {
                     homeSection.set("x", oldHome.get("x"));
                     homeSection.set("y", oldHome.get("y"));
                     homeSection.set("z", oldHome.get("z"));
+                    homeSection.set("yaw", oldHome.get("yaw"));
+                    homeSection.set("pitch", oldHome.get("pitch"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -79,11 +79,15 @@ public class HomeManager {
         if (home == null) {
             home = fileManager.getHomes().createSection(uuid.toString() + "." + homeName.toLowerCase());
         }
+	      float yaw = location.getYaw();
+	      float pitch = location.getPitch();
 
         home.set("world", location.getWorld().getName());
         home.set("x", location.getBlockX());
         home.set("y", location.getBlockY());
         home.set("z", location.getBlockZ());
+		home.set("yaw", Float.valueOf(yaw));
+		home.set("pitch", Float.valueOf(pitch));
 
         fileManager.saveHomes();
     }
@@ -138,11 +142,14 @@ public class HomeManager {
                 int x = home.getInt("x", Integer.MIN_VALUE);
                 int y = home.getInt("y", Integer.MIN_VALUE);
                 int z = home.getInt("z", Integer.MIN_VALUE);
+      	      float yaw = home.getInt("yaw", Integer.MIN_VALUE);
+    	      float pitch = home.getInt("pitch", Integer.MIN_VALUE);
+        		
 
-                if (!(world == null || x == Integer.MIN_VALUE || y == Integer.MIN_VALUE || z == Integer.MIN_VALUE)) {
-                    homeLocation.put(homeName.toLowerCase(), new Location(Bukkit.getWorld(world), x, y, z));
+                if (!(world == null || x == Integer.MIN_VALUE || y == Integer.MIN_VALUE || z == Integer.MIN_VALUE || yaw == Integer.MIN_VALUE || pitch == Integer.MIN_VALUE)) {
+                    homeLocation.put(homeName.toLowerCase(), new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
                 } else {
-                    System.out.println("Error in home, not loaded.");
+                    System.out.println("Error in/or/an home, not loaded.");
                 }
             }
             loadedHomes.put(uuid, homeLocation);
@@ -187,8 +194,10 @@ public class HomeManager {
                 int x = homeSection.getInt("x");
                 int y = homeSection.getInt("y");
                 int z = homeSection.getInt("z");
+        	    float yaw = homeSection.getInt("yaw");
+        	    float pitch = homeSection.getInt("pitch");
 
-                homeLocation.put(home.toLowerCase(), new Location(Bukkit.getWorld(world), x, y, z));
+                homeLocation.put(home.toLowerCase(), new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
             }
         }
         return homeLocation.get(homeName.toLowerCase());
