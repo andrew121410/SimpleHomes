@@ -28,11 +28,13 @@
  */
 package events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import Translate.Translate;
 import homes.HomeManager;
 
 public class GatewayListener implements Listener {
@@ -46,6 +48,12 @@ public class GatewayListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         homeManager.loadPlayerHomes(event.getPlayer().getUniqueId());
+    	Player p = (Player) event.getPlayer();
+    	if(p.isOp()) {
+        p.sendMessage(Translate.chat("&8{[&2SimpleHomes2&8]&8} &9Made By &5Andrew121410,"));
+        p.sendMessage(Translate.chat("&8{[&2SimpleHomes2&8]&8} &4A fork of SimpleHomes just making it better."));
+    	}
+    	return;
             }
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
