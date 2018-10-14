@@ -11,7 +11,7 @@ public class ReloadCommand implements CommandExecutor {
 
 	private SimpleHomes plugin;
     private SimpleHomes simpleHomes;
-
+    
 	public ReloadCommand(SimpleHomes plugin, HomeManager manager){
 		this.plugin = plugin;
 		simpleHomes = plugin;

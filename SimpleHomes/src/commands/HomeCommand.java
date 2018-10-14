@@ -58,6 +58,7 @@ public class HomeCommand implements CommandExecutor {
                 homeName = strings[0].toLowerCase();
             }
             Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
+            
             if (home != null) {
                 player.teleport(home);
                 player.sendMessage(LanguageManager.TELEPORT_SUCCESS);

@@ -190,10 +190,17 @@ public class HomeManager {
         if (homes != null) {
             for (String home : homes.getKeys(false)) {
                 ConfigurationSection homeSection = homes.getConfigurationSection(home);
+                
                 String world = homeSection.getString("world");
                 int x = homeSection.getInt("x");
                 int y = homeSection.getInt("y");
                 int z = homeSection.getInt("z");
+                if(homeSection.getString("yaw") == null) {
+                	homeSection.set("yaw", 0);
+                }
+                if(homeSection.getString("pitch") == null) {
+                	homeSection.set("pitch", 0);
+                }
         	    float yaw = homeSection.getInt("yaw");
         	    float pitch = homeSection.getInt("pitch");
 
