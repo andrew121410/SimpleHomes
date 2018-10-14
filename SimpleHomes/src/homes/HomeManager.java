@@ -142,6 +142,12 @@ public class HomeManager {
                 int x = home.getInt("x", Integer.MIN_VALUE);
                 int y = home.getInt("y", Integer.MIN_VALUE);
                 int z = home.getInt("z", Integer.MIN_VALUE);
+                if(home.getString("yaw") == null) {
+                	home.set("yaw", 0);
+                }
+                if(home.getString("pitch") == null) {
+                	home.set("pitch", 0);
+                }
       	      float yaw = home.getInt("yaw", Integer.MIN_VALUE);
     	      float pitch = home.getInt("pitch", Integer.MIN_VALUE);
         		
@@ -184,7 +190,7 @@ public class HomeManager {
         }
     }
 
-    public Location getPlayerHomeFromFile(UUID uuid, String homeName) {
+    public Location getPlayerHomeFromFile(UUID uuid, String homeName) { //GET PLAYER FROM HOME
         ConfigurationSection homes = fileManager.getHomes().getConfigurationSection(uuid.toString());
         Map<String, Location> homeLocation = new HashMap<>();
         if (homes != null) {
