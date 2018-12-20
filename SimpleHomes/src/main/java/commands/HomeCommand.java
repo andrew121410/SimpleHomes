@@ -50,12 +50,12 @@ public class HomeCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             String homeName = "default";
-            if (strings.length == 1 && sender.hasPermission("simplehomes.multihomes")) {
-                homeName = strings[0].toLowerCase();
+            if (args.length == 1 && sender.hasPermission("simplehomes.multihomes")) {
+                homeName = args[0].toLowerCase();
             }
             Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
             
