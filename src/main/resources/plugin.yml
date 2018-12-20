@@ -19,6 +19,8 @@ commands:
     permission: simplehomes.otherhomes
   homelist:
     description: Get a list of homes
+    aliases:
+      - homes
     permission: simplehomes.homes
   delhome:
     description: Delete a home
