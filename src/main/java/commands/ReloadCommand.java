@@ -16,7 +16,7 @@ public class ReloadCommand implements CommandExecutor {
 
     private SimpleHomes plugin;
     private SimpleHomes simpleHomes;
-    private final HomeManager homeManager = null;
+    private HomeManager homeManager = null;
 
     public ReloadCommand(SimpleHomes plugin, HomeManager manager) {
         this.plugin = plugin;
@@ -58,14 +58,22 @@ public class ReloadCommand implements CommandExecutor {
                     break;
                 }
                 case "unloadhomes": {
-                    this.homeManager.unloadPlayerHomes(p.getUniqueId());
-                    p.sendMessage("OK...");
+                    if (this.homeManager != null) {
+                        this.homeManager.unloadPlayerHomes(p.getUniqueId());
+                        p.sendMessage("OK...");
+                    }else if (this.homeManager == null){
+                        p.sendMessage(Translate.chat("&cOk for some reason right homeManager == null and that's a problem please send this too Discord -> Andrew121410#2035"));
+                    }
                     break;
                 }
 
                 case "gethomes": {
-                    this.homeManager.loadPlayerHomes(p.getUniqueId());
-                    p.sendMessage("OK...");
+                    if (this.homeManager != null) {
+                        this.homeManager.loadPlayerHomes(p.getUniqueId());
+                        p.sendMessage("OK...");
+                    }else if (this.homeManager == null){
+                        p.sendMessage(Translate.chat("&cOk for some reason right homeManager == null and that's a problem please send this too Discord -> Andrew121410#2035"));
+                    }
                     break;
                 }
 
