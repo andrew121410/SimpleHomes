@@ -45,6 +45,7 @@ public class LanguageManager {
     public static String TELEPORT_OTHERHOME = ChatColor.YELLOW + "Teleported to %p's home.";
     public static String TELEPORT_SUCCESS = ChatColor.YELLOW + "Teleported.";
     public static String PLAYER_NOT_EXIST = ChatColor.RED + "That player doesn't exist.";
+    public static String DONT_HAVE_PERMISSION = ChatColor.RED + "You don't have permission";
 
     public LanguageManager(LanguageFileManager fileManager) {
         loadMessages(fileManager.getLanguageConfig());

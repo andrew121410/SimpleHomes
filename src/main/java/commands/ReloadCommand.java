@@ -3,10 +3,12 @@ package commands;
 import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import Translate.Translate;
 import config.LanguageFileManager;
+import config.LanguageManager;
 import homes.HomeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 
@@ -23,7 +25,13 @@ public class ReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("What are you? Only players can use this command.");
+        }
+        if (!(sender.hasPermission("simplehomes2.reload"))) {
+            sender.sendMessage(LanguageManager.DONT_HAVE_PERMISSION);
+            return true;
+        }
         if (args.length == 0) {
             simpleHomes.reloadConfig();
             sender.sendMessage(Translate.chat("The config has been reloaded."));
@@ -44,7 +52,6 @@ public class ReloadCommand implements CommandExecutor {
             return true;
         } else {
         }
-
 
         return true;
     }
