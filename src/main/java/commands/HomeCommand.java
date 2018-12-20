@@ -64,8 +64,7 @@ public class HomeCommand implements CommandExecutor {
                 player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
                 return true;
             } else {
-               // player.sendMessage(LanguageManager.HOME_NOT_FOUND);
-
+                player.sendMessage(LanguageManager.HOME_NOT_FOUND);
                 return true;
             }
         }

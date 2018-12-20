@@ -1,5 +1,5 @@
 home-deleted: "&eHome deleted."
-home-list-prefix: "&eHomes:"
+home-list-prefix: "&6Homes:&r&7"
 home-max-reached: "&cHome cannot be set. The maximum number of homes has been reached."
 home-not-found: "&cHome not found."
 home-set: "&eHome set."

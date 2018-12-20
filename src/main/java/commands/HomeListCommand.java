@@ -74,8 +74,7 @@ public class HomeListCommand implements CommandExecutor {
             if (homes != null) {
                 sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
             } else {
-                //sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
-                sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
+                sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
             }
             return true;
         } else {
