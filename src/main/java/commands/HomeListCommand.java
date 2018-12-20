@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import Translate.Translate;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -57,13 +58,13 @@ public class HomeListCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
                 Set<String> homeSet = new HashSet<>();
                 // Returns a null if the user has no homes
-                if(strings.length != 0) {
-                    UUID uuid = UUIDManager.getUUIDFromPlayer(strings[0]);
+                if(args.length != 0) {
+                    UUID uuid = UUIDManager.getUUIDFromPlayer(args[0]);
                     if (uuid != null) {
                         homeSet = homeManager.getPlayerHomes(uuid).keySet();
                     } else {
@@ -79,7 +80,8 @@ public class HomeListCommand implements CommandExecutor {
                 if (homes != null) {
                     sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
                 } else {
-                    sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
+                    //sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
+                    sender.sendMessage(Translate.chat("Test it worked."));
                 }
             return true;
         } else {
