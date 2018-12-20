@@ -28,76 +28,70 @@
  */
 package commands;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
-import Translate.Translate;
+import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
+import config.LanguageManager;
+import homes.HomeManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
-import config.LanguageManager;
-import homes.HomeManager;
 import utils.UUIDManager;
+
+import java.util.*;
 
 public class HomeListCommand implements CommandExecutor {
 
-	private SimpleHomes plugin;
+    private SimpleHomes plugin;
     private final HomeManager homeManager;
 
-	public HomeListCommand(SimpleHomes plugin, HomeManager manager){
-		this.plugin = plugin;
+    public HomeListCommand(SimpleHomes plugin, HomeManager manager) {
+        this.plugin = plugin;
         homeManager = manager;
-		plugin.getCommand("homelist").setExecutor(this);
+        plugin.getCommand("homelist").setExecutor(this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-                Set<String> homeSet = new HashSet<>();
-                // Returns a null if the user has no homes
-                if(args.length != 0) {
-                    UUID uuid = UUIDManager.getUUIDFromPlayer(args[0]);
-                    if (uuid != null) {
-                        homeSet = homeManager.getPlayerHomes(uuid).keySet();
-                    } else {
-                        player.sendMessage(LanguageManager.PLAYER_NOT_EXIST);
-                    }
+            Set<String> homeSet = new HashSet<>();
+            // Returns a null if the user has no homes
+            if (args.length != 0) {
+                UUID uuid = UUIDManager.getUUIDFromPlayer(args[0]);
+                if (uuid != null) {
+                    homeSet = homeManager.getPlayerHomes(uuid).keySet();
                 } else {
-                    homeSet = homeManager.getPlayerHomes(player.getUniqueId()).keySet();
+                    player.sendMessage(LanguageManager.PLAYER_NOT_EXIST);
                 }
-                String[] homeString = homeSet.toArray(new String[homeSet.size()]);
-                Arrays.sort(homeString);
+            } else {
+                homeSet = homeManager.getPlayerHomes(player.getUniqueId()).keySet();
+            }
+            String[] homeString = homeSet.toArray(new String[homeSet.size()]);
+            Arrays.sort(homeString);
 
-                String homes = homeListString(homeString);
-                if (homes != null) {
-                    sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
-                } else {
-                    //sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
-                    sender.sendMessage(Translate.chat("Test it worked."));
-                }
+            String homes = homeListString(homeString);
+            if (homes != null) {
+                sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
+            } else {
+                //sender.sendMessage(LanguageManager.NO_HOMES_FOUND);
+                sender.sendMessage(LanguageManager.HOME_LIST_PREFIX + " " + homes);
+            }
             return true;
         } else {
             //sender.sendMessage(LanguageManager.PLAYER_COMMAND_ONLY);
             Map<UUID, Map<String, Location>> homes = homeManager.getHomes();
             for (Map.Entry<UUID, Map<String, Location>> entry : homes.entrySet()) {
                 String playerName = UUIDManager.getPlayerFromUUID(entry.getKey());
-                    Set<String> playerHomes = entry.getValue().keySet();
-                    String[] homeStrings = playerHomes.toArray(new String[playerHomes.size()]);
-                    Arrays.sort(homeStrings);
-                    String homeList = homeListString(homeStrings);
-                    if (homeList != null) {
-                        sender.sendMessage("[" + playerName + "]" + LanguageManager.HOME_LIST_PREFIX + " " + homeList);
-                    } else {
-                        sender.sendMessage("[" + playerName + "]" + " " + LanguageManager.NO_HOMES_FOUND);
-                    }
+                Set<String> playerHomes = entry.getValue().keySet();
+                String[] homeStrings = playerHomes.toArray(new String[playerHomes.size()]);
+                Arrays.sort(homeStrings);
+                String homeList = homeListString(homeStrings);
+                if (homeList != null) {
+                    sender.sendMessage("[" + playerName + "]" + LanguageManager.HOME_LIST_PREFIX + " " + homeList);
+                } else {
+                    sender.sendMessage("[" + playerName + "]" + " " + LanguageManager.NO_HOMES_FOUND);
+                }
 
             }
             return true;

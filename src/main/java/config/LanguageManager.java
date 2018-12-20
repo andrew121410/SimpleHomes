@@ -28,16 +28,17 @@
  */
 package config;
 
+import Translate.Translate;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class LanguageManager {
 
     public static String HOME_DELETED = ChatColor.YELLOW + "Home deleted.";
-    public static String HOME_LIST_PREFIX = ChatColor.YELLOW + "Homes:";
+    public static String HOME_LIST_PREFIX = ChatColor.GOLD + "Homes:" + ChatColor.RESET + ChatColor.GRAY;
     public static String HOME_NOT_FOUND = ChatColor.RED + "Home not found.";
     public static String HOME_MAX_REACHED = ChatColor.RED + "Home cannot be set. The maximum number of homes has been " +
-                                            "reached";
+            "reached";
     public static String HOME_SET = ChatColor.YELLOW + "Home set.";
     public static String NO_HOMES_FOUND = ChatColor.RED + "No homes found.";
     public static String PLAYER_COMMAND_ONLY = ChatColor.RED + "Only players may issue that command.";
@@ -49,20 +50,16 @@ public class LanguageManager {
         loadMessages(fileManager.getLanguageConfig());
     }
 
-    private String convertColours(String string) {
-        return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
     private void loadMessages(FileConfiguration languageConfig) {
-        HOME_DELETED = convertColours(languageConfig.getString("home-deleted"));
-        HOME_LIST_PREFIX = convertColours(languageConfig.getString("home-list-prefix"));
-        HOME_NOT_FOUND = convertColours(languageConfig.getString("home-not-found"));
-        HOME_MAX_REACHED = convertColours(languageConfig.getString("home-max-reached"));
-        HOME_SET = convertColours(languageConfig.getString("home-set"));
-        NO_HOMES_FOUND = convertColours(languageConfig.getString("no-homes-found"));
-        PLAYER_COMMAND_ONLY = convertColours(languageConfig.getString("player-command-only"));
-        TELEPORT_OTHERHOME = convertColours(languageConfig.getString("teleport-otherhome"));
-        TELEPORT_SUCCESS = convertColours(languageConfig.getString("teleport-success"));
-        PLAYER_NOT_EXIST = convertColours(languageConfig.getString("player-not-exist"));
+        HOME_DELETED = Translate.chat(languageConfig.getString("home-deleted"));
+        HOME_LIST_PREFIX = Translate.chat(languageConfig.getString("home-list-prefix"));
+        HOME_NOT_FOUND = Translate.chat(languageConfig.getString("home-not-found"));
+        HOME_MAX_REACHED = Translate.chat(languageConfig.getString("home-max-reached"));
+        HOME_SET = Translate.chat(languageConfig.getString("home-set"));
+        NO_HOMES_FOUND = Translate.chat(languageConfig.getString("no-homes-found"));
+        PLAYER_COMMAND_ONLY = Translate.chat(languageConfig.getString("player-command-only"));
+        TELEPORT_OTHERHOME = Translate.chat(languageConfig.getString("teleport-otherhome"));
+        TELEPORT_SUCCESS = Translate.chat(languageConfig.getString("teleport-success"));
+        PLAYER_NOT_EXIST = Translate.chat(languageConfig.getString("player-not-exist"));
     }
 }
