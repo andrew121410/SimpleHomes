@@ -1,16 +1,15 @@
 package commands;
 
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
+import Main.SimpleHomes;
 import Translate.Translate;
 import config.LanguageFileManager;
 import config.LanguageManager;
 import homes.HomeManager;
+import java.io.File;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.io.File;
 
 public class ReloadCommand implements CommandExecutor {
 
@@ -44,7 +43,7 @@ public class ReloadCommand implements CommandExecutor {
             p.sendMessage(Translate.chat("/shreload gethomes"));
             return true;
         } else if (args.length >= 1) {
-            switch (args[0].toString()) {
+            switch (args[0]) {
                 case "reloadconfig": {
                     simpleHomes.reloadConfig();
                     sender.sendMessage(Translate.chat("The config has been reloaded."));

@@ -28,14 +28,13 @@
  */
 package commands;
 
+import Main.SimpleHomes;
+import config.LanguageManager;
+import homes.HomeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
-import config.LanguageManager;
-import homes.HomeManager;
 
 public class DeleteHomeCommand implements CommandExecutor {
 	

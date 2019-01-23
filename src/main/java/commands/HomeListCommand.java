@@ -28,17 +28,20 @@
  */
 package commands;
 
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
+import Main.SimpleHomes;
+import Utils.UUIDManager;
 import config.LanguageManager;
 import homes.HomeManager;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import utils.UUIDManager;
-
-import java.util.*;
 
 public class HomeListCommand implements CommandExecutor {
 

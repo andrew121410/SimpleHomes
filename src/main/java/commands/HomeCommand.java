@@ -28,16 +28,15 @@
  */
 package commands;
 
+import Main.SimpleHomes;
 import World16.CustomEvents.handlers.TpEventHandler;
+import config.LanguageManager;
+import homes.HomeManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
-import config.LanguageManager;
-import homes.HomeManager;
 import org.bukkit.plugin.PluginManager;
 
 public class HomeCommand implements CommandExecutor {

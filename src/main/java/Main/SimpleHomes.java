@@ -27,20 +27,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package SimpleHomes2.SimpleHomes2.SimpleHomes2;
+package Main;
 
-import commands.*;
+import commands.DeleteHomeCommand;
+import commands.HomeCommand;
+import commands.HomeListCommand;
+import commands.OtherHomeCommand;
+import commands.ReloadCommand;
+import commands.SetHomeCommand;
 import config.ConfigManager;
 import config.HomeFileManager;
 import config.LanguageFileManager;
 import config.LanguageManager;
 import events.GatewayListener;
 import homes.HomeManager;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
 
 public class SimpleHomes extends JavaPlugin {
 

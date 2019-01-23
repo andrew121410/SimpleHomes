@@ -28,7 +28,7 @@
  */
 package config;
 
-import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
+import Main.SimpleHomes;
 
 public class ConfigManager {
 

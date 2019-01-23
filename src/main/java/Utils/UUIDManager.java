@@ -1,11 +1,14 @@
-package utils;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+package Utils;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * This class allows developers to easily get UUIDs from names <br>

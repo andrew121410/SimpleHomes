@@ -1,9 +1,6 @@
-package utils;
+package Utils;
 
 import com.google.common.collect.ImmutableList;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class NameFetcher implements Callable<Map<UUID, String>> {
 
