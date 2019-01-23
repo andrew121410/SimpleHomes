@@ -28,6 +28,7 @@
  */
 package commands;
 
+import World16.CustomEvents.handlers.TpEventHandler;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,6 +38,7 @@ import org.bukkit.entity.Player;
 import SimpleHomes2.SimpleHomes2.SimpleHomes2.SimpleHomes;
 import config.LanguageManager;
 import homes.HomeManager;
+import org.bukkit.plugin.PluginManager;
 
 public class HomeCommand implements CommandExecutor {
 
@@ -49,6 +51,8 @@ public class HomeCommand implements CommandExecutor {
 		plugin.getCommand("home").setExecutor(this);
     }
 
+    PluginManager pm = this.plugin.getServer().getPluginManager();
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender instanceof Player) {
@@ -60,9 +64,16 @@ public class HomeCommand implements CommandExecutor {
             Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
             
             if (home != null) {
-                player.teleport(home);
-                player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
-                return true;
+                if (pm.getPlugin("World1-6Essentials") != null ) {
+                    new TpEventHandler(player.getDisplayName()); //RUNS TP EVENT FROM WORLD1-6ESS
+                    player.teleport(home);
+                    player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
+                    return true;
+                }else {
+                    player.teleport(home);
+                    player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
+                    return true;
+                }
             } else {
                 player.sendMessage(LanguageManager.HOME_NOT_FOUND);
                 return true;

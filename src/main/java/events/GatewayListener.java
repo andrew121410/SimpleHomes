@@ -47,11 +47,10 @@ public class GatewayListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         homeManager.loadPlayerHomes(event.getPlayer().getUniqueId());
-        Player p = (Player) event.getPlayer();
 
-        p.sendMessage(Translate.chat("<&2SimpleHomes2&r> &4Last Time Updated was 12/19/2018 updated by andrew121410"));
+        Player p = event.getPlayer();
 
-        return;
+        p.sendMessage(Translate.chat("<&2SimpleHomes2&r> &4Last Time Updated was 1/23/2019 updated by andrew121410"));
     }
 
     @EventHandler
