@@ -29,7 +29,6 @@
 package commands;
 
 import Main.SimpleHomes;
-import World16.CustomEvents.handlers.TpEventHandler;
 import config.LanguageManager;
 import homes.HomeManager;
 import org.bukkit.Location;
@@ -61,16 +60,8 @@ public class HomeCommand implements CommandExecutor {
             Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
             
             if (home != null) {
-                if (SimpleHomes.World16Ess = true) {
-                    new TpEventHandler(player.getDisplayName()); //RUNS TP EVENT FROM WORLD1-6ESS
                     player.teleport(home);
                     player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
-                    return true;
-                }else {
-                    player.teleport(home);
-                    player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
-                    return true;
-                }
             } else {
                 player.sendMessage(LanguageManager.HOME_NOT_FOUND);
                 return true;
