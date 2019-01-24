@@ -44,6 +44,7 @@ import homes.HomeManager;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimpleHomes extends JavaPlugin {
@@ -51,11 +52,19 @@ public class SimpleHomes extends JavaPlugin {
     public static SimpleHomes instance;
     public static SimpleHomes plugin; //IK i have 2 of em.
 
+    //
+    public static boolean World16Ess = false;
+    //
+
+    PluginManager pm;
+
     private HomeFileManager homeFileManager;
     private HomeManager homeManager;
 
     public void onEnable() {
         plugin = this;
+        pm = plugin.getServer().getPluginManager();
+        checkPlugins();
         loadShit();
         loadListeners();
         loadCommands();
@@ -78,7 +87,8 @@ public class SimpleHomes extends JavaPlugin {
     }
 
     private void loadListeners() {
-        Bukkit.getServer().getPluginManager().registerEvents(new GatewayListener(homeManager), this);
+        Bukkit.getServer().getPluginManager()
+            .registerEvents(new GatewayListener(homeManager), this);
     }
 
     private void loadShit() {
@@ -95,5 +105,13 @@ public class SimpleHomes extends JavaPlugin {
         //...
         new ConfigManager(this);
         homeFileManager.saveHomes();
+    }
+
+    public void checkPlugins() {
+
+        if (pm.getPlugin("World1-6Essentials") != null) {
+            World16Ess = true;
+        }
+
     }
 }

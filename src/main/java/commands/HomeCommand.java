@@ -37,18 +37,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
 
 public class HomeCommand implements CommandExecutor {
 
 	private SimpleHomes plugin;
     private final HomeManager homeManager;
-  PluginManager pm;
 
 	public HomeCommand(SimpleHomes plugin, HomeManager manager){
 		this.plugin = plugin;
         homeManager = manager;
-    pm = this.plugin.getServer().getPluginManager();
 		plugin.getCommand("home").setExecutor(this);
     }
 
@@ -64,7 +61,7 @@ public class HomeCommand implements CommandExecutor {
             Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
             
             if (home != null) {
-                if (pm.getPlugin("World1-6Essentials") != null ) {
+                if (SimpleHomes.World16Ess = true) {
                     new TpEventHandler(player.getDisplayName()); //RUNS TP EVENT FROM WORLD1-6ESS
                     player.teleport(home);
                     player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
