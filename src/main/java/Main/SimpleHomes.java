@@ -56,20 +56,9 @@ public class SimpleHomes extends JavaPlugin {
 
     public void onEnable() {
         plugin = this;
-        FileConfiguration config = this.getConfig();
-        //CONFIG Version
-        this.homeFileManager = new HomeFileManager(this);
-        this.homeManager = new HomeManager(homeFileManager);
-        //this.saveDefaultConfig();
-        config.options().copyDefaults(true);
-        this.saveConfig();
-        LanguageFileManager languageFileManager = new LanguageFileManager(this);
-        languageFileManager.saveLanguages();
-        new LanguageManager(languageFileManager);
-        new ConfigManager(this);
-        homeFileManager.saveHomes();
-        loadCommands();
+        loadShit();
         loadListeners();
+        loadCommands();
         getLogger().info("SimpleHomes2 Enabled!");
     }
 
@@ -80,21 +69,31 @@ public class SimpleHomes extends JavaPlugin {
     }
 
     private void loadCommands() {
-        //this.getCommand("delhome").setExecutor(new DeleteHomeCommand(homeManager));
         new DeleteHomeCommand(this, homeManager);
-        //this.getCommand("home").setExecutor(new HomeCommand(homeManager));
         new HomeCommand(this, homeManager);
-        //this.getCommand("homelist").setExecutor(new HomeListCommand(homeManager));
         new HomeListCommand(this, homeManager);
-        //this.getCommand("otherhome").setExecutor(new OtherHomeCommand(this, homeManager));
         new OtherHomeCommand(this, homeManager);
-        //this.getCommand("sethome").setExecutor(new SetHomeCommand(homeManager));
         new SetHomeCommand(this, homeManager);
-        //this.getCommand("shreload").setExecutor(new ReloadCommand(this));
         new ReloadCommand(this, homeManager);
     }
 
     private void loadListeners() {
         Bukkit.getServer().getPluginManager().registerEvents(new GatewayListener(homeManager), this);
+    }
+
+    private void loadShit() {
+        FileConfiguration config = this.getConfig();
+        //CONFIG Version
+        this.homeFileManager = new HomeFileManager(this);
+        this.homeManager = new HomeManager(homeFileManager);
+        config.options().copyDefaults(true);
+        this.saveConfig();
+        //LANGUAGE
+        LanguageFileManager languageFileManager = new LanguageFileManager(this);
+        languageFileManager.saveLanguages();
+        new LanguageManager(languageFileManager);
+        //...
+        new ConfigManager(this);
+        homeFileManager.saveHomes();
     }
 }
