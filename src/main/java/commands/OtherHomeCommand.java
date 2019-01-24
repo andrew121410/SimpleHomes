@@ -1,34 +1,7 @@
-/*
- * Copyright (c) 2014, LankyLord
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its contributors
- *    may be used to endorse or promote products derived from this software without
- *    specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package commands;
 
 import Main.SimpleHomes;
+import Translate.Translate;
 import Utils.UUIDManager;
 import config.LanguageManager;
 import homes.HomeManager;
@@ -42,62 +15,60 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class OtherHomeCommand implements CommandExecutor {
 
-	private SimpleHomes plugin;
+    private SimpleHomes plugin;
     private final SimpleHomes simpleHomes;
     private final HomeManager homeManager;
-        
-    	public OtherHomeCommand(SimpleHomes plugin, HomeManager manager){
-    		this.plugin = plugin;
-    		simpleHomes = plugin;
-            homeManager = manager;
-    		plugin.getCommand("otherhome").setExecutor(this);
+
+    public OtherHomeCommand(SimpleHomes plugin, HomeManager manager) {
+        this.plugin = plugin;
+        simpleHomes = plugin;
+        homeManager = manager;
+        plugin.getCommand("otherhome").setExecutor(this);
     }
 
-        @SuppressWarnings("deprecation")
-        @Override
-        public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-            if (sender instanceof Player) {
-                if (strings.length == 0) {
-                    return false;
-                }
-                final Player player = (Player) sender;
-                final String homeName;
-                if (strings.length == 2) {
-                    homeName = strings[1].toLowerCase();
-                } else {
-                    homeName = "default";
-                }
-                final String targetName = strings[0].toLowerCase();
-                simpleHomes.getServer().getScheduler().runTaskAsynchronously(simpleHomes, new BukkitRunnable() {
-                    UUID targetUUID;
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Only players can use this command.");
+            return false;
+        }
+        Player p = (Player) sender;
+        if (args.length <= 1) {
+            p.sendMessage(
+                Translate.chat("[&2SimpleHomes2&r] &cUsage: /otherhome <Player> <Homename>"));
+            return true;
+        } else if (args.length >= 2) {
+            String homename;
+            String targetname;
+            targetname = args[0].toLowerCase();
+            homename = args[1].toLowerCase();
 
-                    @Override
-                    public void run() {
-                        targetUUID = UUIDManager.getUUIDFromPlayer(targetName);
-                        if (targetUUID != null) {
-                            simpleHomes.getServer().getScheduler().runTask(simpleHomes, new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    Location location = homeManager.getPlayerHome(targetUUID, homeName);
-                                    if (location == null) {
-                                        location = homeManager.getPlayerHomeFromFile(targetUUID, homeName);
-                                    }
-                                    if (location != null) {
-                                        player.teleport(location);
-                                        player.sendMessage(LanguageManager.TELEPORT_OTHERHOME.replaceAll("%p", targetName));
-                                    } else {
-                                        player.sendMessage(LanguageManager.HOME_NOT_FOUND);
-                                    }
-                                }
-                            });
+            new BukkitRunnable() {
+                UUID targetUUID;
+
+                @Override
+                public void run() {
+                    targetUUID = UUIDManager.getUUIDFromPlayer(targetname);
+
+                    if (targetUUID != null) {
+                        Location location = homeManager.getPlayerHome(targetUUID, homename);
+
+                        if (location == null) {
+                            location = homeManager.getPlayerHomeFromFile(targetUUID, homename);
+                        }
+
+                        if (location != null) {
+                            p.teleport(location);
+                            p.sendMessage(
+                                LanguageManager.TELEPORT_OTHERHOME.replaceAll("%p", targetname));
                         } else {
-                            player.sendMessage(LanguageManager.PLAYER_NOT_EXIST);
+                            p.sendMessage(LanguageManager.HOME_NOT_FOUND);
                         }
                     }
-                });
-            } else {
-                sender.sendMessage(LanguageManager.PLAYER_COMMAND_ONLY);
-            }
-            return true;
+                }
+            }.runTaskAsynchronously(this.plugin);
         }
+        return true;
+    }
 }

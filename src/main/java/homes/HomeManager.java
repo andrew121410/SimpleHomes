@@ -30,14 +30,13 @@ package homes;
 
 import config.ConfigManager;
 import config.HomeFileManager;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class HomeManager {
 
@@ -221,7 +220,7 @@ public class HomeManager {
     }
 
     /**
-     * Gets Player home from home file.
+     * This gets a player home USES: OtherHomeCommand.
      *
      * @param uuid
      * @param homeName

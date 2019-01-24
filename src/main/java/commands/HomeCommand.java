@@ -43,14 +43,15 @@ public class HomeCommand implements CommandExecutor {
 
 	private SimpleHomes plugin;
     private final HomeManager homeManager;
+  PluginManager pm;
 
 	public HomeCommand(SimpleHomes plugin, HomeManager manager){
 		this.plugin = plugin;
         homeManager = manager;
+    pm = this.plugin.getServer().getPluginManager();
 		plugin.getCommand("home").setExecutor(this);
     }
 
-    PluginManager pm = this.plugin.getServer().getPluginManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
