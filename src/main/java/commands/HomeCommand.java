@@ -39,37 +39,36 @@ import org.bukkit.entity.Player;
 
 public class HomeCommand implements CommandExecutor {
 
-	private SimpleHomes plugin;
+    private SimpleHomes plugin;
     private final HomeManager homeManager;
 
-	public HomeCommand(SimpleHomes plugin, HomeManager manager){
-		this.plugin = plugin;
+    public HomeCommand(SimpleHomes plugin, HomeManager manager) {
+        this.plugin = plugin;
         homeManager = manager;
-		plugin.getCommand("home").setExecutor(this);
+        plugin.getCommand("home").setExecutor(this);
     }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            String homeName = "default";
-            if (args.length == 1 && sender.hasPermission("simplehomes.multihomes")) {
-                homeName = args[0].toLowerCase();
-            }
-            Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
-            
-            if (home != null) {
-                    player.teleport(home);
-                    player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
-            } else {
-                player.sendMessage(LanguageManager.HOME_NOT_FOUND);
-                return true;
-            }
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Only players can use this command.");
         }
-        sender.sendMessage(LanguageManager.PLAYER_COMMAND_ONLY);
+        Player player = (Player) sender;
+        String homeName = "default";
+
+        if (args.length == 1 && sender.hasPermission("simplehomes.multihomes")) {
+            homeName = args[0].toLowerCase();
+        }
+        Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
+
+        if (home != null) {
+            player.teleport(home);
+            player.sendMessage(LanguageManager.TELEPORT_SUCCESS);
+        } else {
+            player.sendMessage(LanguageManager.HOME_NOT_FOUND);
+            return true;
+        }
         return true;
     }
 }
-    
-
