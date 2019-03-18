@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class GatewayListener implements Listener {
 
-    ISQL isql;
-    HomesAPI homesAPI;
+    private ISQL isql;
+    private HomesAPI homesAPI;
 
-    SimpleHomes simpleHomes;
+    private SimpleHomes simpleHomes;
 
     public GatewayListener(SimpleHomes simpleHomes) {
         this.simpleHomes = simpleHomes;

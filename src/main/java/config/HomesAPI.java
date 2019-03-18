@@ -16,7 +16,7 @@ import java.util.*;
 
 public class HomesAPI {
 
-    Map<UUID, Map<String, Location>> rawHomesMap = HomeCommand.rawHomesMap;
+    private Map<UUID, Map<String, Location>> rawHomesMap = HomeCommand.rawHomesMap;
 
     public HomesAPI() {
 
@@ -49,7 +49,10 @@ public class HomesAPI {
     public void getAllHomesFromISQL(ISQL isql, Player player) {
         if (rawHomesMap == null) {
             rawHomesMap = new HashMap<>();
+            player.kickPlayer("You should relog because umm something went wrong badly so?");
+            return;
         }
+
         rawHomesMap.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>());
 
         isql.Connect();
@@ -68,7 +71,7 @@ public class HomesAPI {
                 String PITCH = rs.getString("PITCH");
                 String World = rs.getString("World");
 
-                rawHomesMap.get(UUID).put(HomeName, new Location(Bukkit.getServer().getWorld(World), Double.parseDouble(X), Double.parseDouble(Y), Double.parseDouble(Z), Float.parseFloat(YAW), Float.parseFloat(PITCH)));
+                rawHomesMap.get(player.getUniqueId()).put(HomeName, new Location(Bukkit.getServer().getWorld(World), Double.parseDouble(X), Double.parseDouble(Y), Double.parseDouble(Z), Float.parseFloat(YAW), Float.parseFloat(PITCH)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,8 +104,9 @@ public class HomesAPI {
         Set<String> homeSet = rawHomesMap.get(player.getUniqueId()).keySet();
         String[] homeString = homeSet.toArray(new String[homeSet.size()]);
         Arrays.sort(homeString);
-        String str = String.join(",", homeString);
-        return str;
+        String str = String.join(", ", homeString);
+        String newSTR = LanguageManager.HOME_LIST_PREFIX + " " + str;
+        return newSTR;
     }
 
     public void setHome(ISQL isql, Player player, String HomeName) {
@@ -125,7 +129,7 @@ public class HomesAPI {
 
     private void setHomeToISQL(ISQL isql, UUID uuid, String PlayerName, String HomeName, Location location) {
         isql.Connect();
-        PreparedStatement preparedStatement = isql.ExecuteCommandPreparedStatement("INSERT INTO Homes (UUID,Date,PlayerName,HomeName,X,Y,Z,YAW,PITCH,World) VALUES (?,?,?,?,?,?,?,?,?,?,);");
+        PreparedStatement preparedStatement = isql.ExecuteCommandPreparedStatement("INSERT INTO Homes (UUID,Date,PlayerName,HomeName,X,Y,Z,YAW,PITCH,World) VALUES (?,?,?,?,?,?,?,?,?,?);");
         try {
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.setString(2, "0");
@@ -137,8 +141,11 @@ public class HomesAPI {
             preparedStatement.setString(8, String.valueOf(location.getYaw()));
             preparedStatement.setString(9, String.valueOf(location.getPitch()));
             preparedStatement.setString(10, location.getWorld().getName());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            isql.Disconnect();
         }
 
     }

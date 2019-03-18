@@ -11,21 +11,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class HomeCommand implements CommandExecutor {
 
-    public static Map<UUID, Map<String, Location>> rawHomesMap;
+    public static Map<UUID, Map<String, Location>> rawHomesMap = new HashMap<>();
 
-    ISQL sqLite;
-    HomesAPI homesAPI;
+    private ISQL sqLite;
+    private HomesAPI homesAPI;
 
     private SimpleHomes plugin;
 
     public HomeCommand(SimpleHomes plugin) {
         this.plugin = plugin;
-
         sqLite = new SQLite(this.plugin.getDataFolder(), "Homes");
         homesAPI = new HomesAPI(this.sqLite);
 

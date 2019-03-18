@@ -21,8 +21,8 @@ public class SimpleHomes extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         pm = plugin.getServer().getPluginManager();
-        loadListeners();
         loadCommands();
+        loadListeners();
         getLogger().info("SimpleHomes2 Enabled!");
     }
 
