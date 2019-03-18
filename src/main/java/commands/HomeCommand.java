@@ -1,50 +1,34 @@
-/*
- * Copyright (c) 2014, LankyLord
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its contributors
- *    may be used to endorse or promote products derived from this software without
- *    specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package commands;
 
+import CCUtils.Storage.ISQL;
+import CCUtils.Storage.SQLite;
 import Main.SimpleHomes;
+import config.HomesAPI;
 import config.LanguageManager;
-import homes.HomeManager;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
+import java.util.UUID;
+
 public class HomeCommand implements CommandExecutor {
 
-    private SimpleHomes plugin;
-    private final HomeManager homeManager;
+    public static Map<UUID, Map<String, Location>> rawHomesMap;
 
-    public HomeCommand(SimpleHomes plugin, HomeManager manager) {
+    ISQL sqLite;
+    HomesAPI homesAPI;
+
+    private SimpleHomes plugin;
+
+    public HomeCommand(SimpleHomes plugin) {
         this.plugin = plugin;
-        homeManager = manager;
+
+        sqLite = new SQLite(this.plugin.getDataFolder(), "Homes");
+        homesAPI = new HomesAPI(this.sqLite);
+
         plugin.getCommand("home").setExecutor(this);
     }
 
@@ -55,12 +39,17 @@ public class HomeCommand implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
         }
         Player player = (Player) sender;
-        String homeName = "default";
+        String homeName = "home";
 
-        if (args.length == 1 && sender.hasPermission("simplehomes.multihomes")) {
+        if (args.length == 1 && sender.hasPermission("simplehomes.home")) {
             homeName = args[0].toLowerCase();
+            if (homeName.equalsIgnoreCase("olddata")) {
+                homesAPI.getOLDSHIT(this.plugin, sqLite, player);
+                player.sendMessage("Getting Old Data From Homes.YML");
+                return true;
+            }
         }
-        Location home = homeManager.getPlayerHome(player.getUniqueId(), homeName);
+        Location home = homesAPI.getHomeFromMap(player, homeName);
 
         if (home != null) {
             player.teleport(home);

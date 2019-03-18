@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.l89669:bukkitYaml:0.1-pre">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/l89669/bukkitYaml/0.1-pre/bukkitYaml-0.1-pre.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/l89669/bukkitYaml/0.1-pre/bukkitYaml-0.1-pre-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/l89669/bukkitYaml/0.1-pre/bukkitYaml-0.1-pre-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
