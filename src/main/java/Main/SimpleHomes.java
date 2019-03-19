@@ -13,7 +13,6 @@ import java.util.logging.Level;
 
 public class SimpleHomes extends JavaPlugin {
 
-    public static SimpleHomes instance;
     public static SimpleHomes plugin; //IK i have 2 of em.
 
     PluginManager pm;

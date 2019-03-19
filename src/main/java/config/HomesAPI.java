@@ -96,7 +96,7 @@ public class HomesAPI {
 
     public void removeHomeForISQL(ISQL isql, Player player, String HomeName) {
         isql.Connect();
-        isql.ExecuteCommand("DELETE FROM Homes WHERE UUID='" + player.getUniqueId() + "' AND HomeName='" + HomeName + "'");
+        isql.ExecuteCommand("DELETE FROM Homes WHERE UUID='" + player.getUniqueId() + "' AND HomeName='" + HomeName.toLowerCase() + "'");
         isql.Disconnect();
     }
 
@@ -110,19 +110,13 @@ public class HomesAPI {
     }
 
     public void setHome(ISQL isql, Player player, String HomeName) {
-        Map<String, Location> homeLocation = this.rawHomesMap.get(player.getUniqueId());
-
-        homeLocation.put(HomeName.toLowerCase(), player.getLocation());
-        this.rawHomesMap.put(player.getUniqueId(), homeLocation);
+        rawHomesMap.get(player.getUniqueId()).put(HomeName.toLowerCase(), player.getLocation());
 
         setHomeToISQL(isql, player.getUniqueId(), player.getDisplayName(), HomeName, player.getLocation());
     }
 
     public void setHome(ISQL isql, UUID uuid, String PlayerName, String HomeName, Location location) {
-        Map<String, Location> homeLocation = this.rawHomesMap.get(uuid);
-
-        homeLocation.put(HomeName.toLowerCase(), location);
-        this.rawHomesMap.put(uuid, homeLocation);
+        rawHomesMap.get(uuid).put(HomeName.toLowerCase(), location);
 
         setHomeToISQL(isql, uuid, PlayerName, HomeName, location);
     }
@@ -134,7 +128,7 @@ public class HomesAPI {
             preparedStatement.setString(1, uuid.toString());
             preparedStatement.setString(2, "0");
             preparedStatement.setString(3, PlayerName);
-            preparedStatement.setString(4, HomeName);
+            preparedStatement.setString(4, HomeName.toLowerCase());
             preparedStatement.setString(5, String.valueOf(location.getX()));
             preparedStatement.setString(6, String.valueOf(location.getY()));
             preparedStatement.setString(7, String.valueOf(location.getZ()));
@@ -185,7 +179,7 @@ public class HomesAPI {
 
                 if (!(world == null || x == Integer.MIN_VALUE || y == Integer.MIN_VALUE || z == Integer.MIN_VALUE || yaw == Integer.MIN_VALUE || pitch == Integer.MIN_VALUE)) {
                     this.setHome(isql, player.getUniqueId(), player.getDisplayName(), homeName, new Location(Bukkit.getWorld(world), x, y, z, yaw, pitch));
-                    player.sendMessage(Translate.chat("&6<&9Andrew's Data Converter &ev1.0&6> &aSuccessfully imported -> &c" + homeName));
+                    player.sendMessage(Translate.chat("&6<&9Andrew's Data Converter &ev1.0&6> &aimported-> &c" + homeName));
                 } else {
                     System.out.println("Error in/or/an home, not loaded.");
                 }

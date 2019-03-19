@@ -1,6 +1,6 @@
 name: SimpleHomes2
-version: ${version}
-description: A Fork Of SimpleHomes But Better.
+version: 2.0.0
+description: This basically is my plugin now lol
 authors: [Andrew121410]
 
 main: Main.SimpleHomes
