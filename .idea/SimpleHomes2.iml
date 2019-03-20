@@ -21,7 +21,7 @@
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.18" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.md-5:bungeecord-chat:1.12-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.bukkit:bukkit:1.12-R0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.github.andrew121410:CCUtilsJava:a6a7f462d1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.andrew121410:CCUtilsJava:d0ad10f3b1" level="project" />
     <orderEntry type="library" name="Maven: com.github.l89669:bukkitYaml:0.1-pre" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.15" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.6.1" level="project" />

@@ -31,6 +31,11 @@ public class DeleteHomeCommand implements CommandExecutor {
             String homeName = "home";
             if (strings.length == 1 && sender.hasPermission("simplehomes.home")) {
                 homeName = strings[0].toLowerCase();
+
+                if(homeName.equalsIgnoreCase("@allHomes")){
+                    homesAPI.removeAllHomesFromISQL(isql, player);
+                    return true;
+                }
             }
             homesAPI.removeHome(isql, player, homeName);
             player.sendMessage(LanguageManager.HOME_DELETED);

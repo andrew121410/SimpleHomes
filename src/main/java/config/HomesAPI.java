@@ -16,7 +16,7 @@ import java.util.*;
 
 public class HomesAPI {
 
-    private Map<UUID, Map<String, Location>> rawHomesMap = HomeCommand.rawHomesMap;
+    Map<UUID, Map<String, Location>> rawHomesMap = HomeCommand.rawHomesMap;
 
     public HomesAPI() {
 
@@ -100,9 +100,17 @@ public class HomesAPI {
         isql.Disconnect();
     }
 
+    public void removeAllHomesFromISQL(ISQL isql, Player player) {
+        isql.Connect();
+        isql.ExecuteCommand("DELETE FROM Homes WHERE UUID='" + player.getUniqueId() + "'");
+        isql.Disconnect();
+        rawHomesMap.remove(player.getUniqueId());
+        player.kickPlayer("All homes has been cleared! Rejoin the server!");
+    }
+
     public String listHomesInMap(Player player) {
         Set<String> homeSet = rawHomesMap.get(player.getUniqueId()).keySet();
-        String[] homeString = homeSet.toArray(new String[homeSet.size()]);
+        String[] homeString = homeSet.toArray(new String[0]);
         Arrays.sort(homeString);
         String str = String.join(", ", homeString);
         String newSTR = LanguageManager.HOME_LIST_PREFIX + " " + str;
