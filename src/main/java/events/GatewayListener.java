@@ -30,7 +30,7 @@ public class GatewayListener implements Listener {
 
         homesAPI.getAllHomesFromISQL(isql, p);
 
-        p.sendMessage(Translate.chat("&a<Simple&9Homes>&c&l To get your old home data use the command &9/home olddata&c&l if you haven't already."));
+        p.sendMessage(Translate.chat("&a<Simple&9Homes>&c&l To get your old home data use the command &9/home @olddata&c&l if you haven't already."));
     }
 
     @EventHandler

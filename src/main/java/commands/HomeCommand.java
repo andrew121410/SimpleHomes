@@ -3,8 +3,10 @@ package commands;
 import CCUtils.Storage.ISQL;
 import CCUtils.Storage.SQLite;
 import Main.SimpleHomes;
+import Translate.Translate;
 import config.HomesAPI;
 import config.LanguageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,6 +32,7 @@ public class HomeCommand implements CommandExecutor {
         homesAPI = new HomesAPI(this.sqLite);
 
         plugin.getCommand("home").setExecutor(this);
+        plugin.getCommand("home").setTabCompleter(new HomeListTab());
     }
 
 
@@ -43,11 +46,22 @@ public class HomeCommand implements CommandExecutor {
 
         if (args.length == 1 && sender.hasPermission("simplehomes.home")) {
             homeName = args[0].toLowerCase();
-            if (homeName.equalsIgnoreCase("olddata")) {
+
+            if (homeName.equalsIgnoreCase("@olddata")) {
                 homesAPI.getOLDSHIT(this.plugin, sqLite, player);
                 player.sendMessage("Getting Old Data From Homes.YML");
                 return true;
             }
+
+            if(homeName.equalsIgnoreCase("@regetall")){
+                Bukkit.getServer().getOnlinePlayers().forEach((player1) -> {
+                    homesAPI.unloadPlayerHomes(player1);
+                    homesAPI.getAllHomesFromISQL(sqLite, player1);
+                    player1.sendMessage(Translate.chat("[&6SimpleHomes2&r] &cYour home data got wiped from memory BUT luckily it saved because Andrew's smart like that."));
+                });
+                return true;
+            }
+
         }
         Location home = homesAPI.getHomeFromMap(player, homeName);
 

@@ -22,6 +22,7 @@ public class DeleteHomeCommand implements CommandExecutor {
         isql = new SQLite(this.plugin.getDataFolder(), "Homes");
         homesAPI = new HomesAPI(isql);
         plugin.getCommand("delhome").setExecutor(this);
+        plugin.getCommand("delhome").setTabCompleter(new HomeListTab());
     }
 
     @Override
