@@ -218,6 +218,8 @@ public class HomesAPI {
             return;
         }
 
-        this.getAllHomesFromISQL(isql, player);
+        if (rawHomesMap.get(uuid).isEmpty()) {
+            this.getAllHomesFromISQL(isql, player);
+        }
     }
 }
