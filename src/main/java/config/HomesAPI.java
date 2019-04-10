@@ -51,7 +51,7 @@ public class HomesAPI {
     }
 
     public void getAllHomesFromISQL(ISQL isql, Player player) {
-        this.fixMaps(player.getUniqueId());
+        this.fixMaps(player.getUniqueId(), false);
 
         isql.Connect();
 
@@ -79,19 +79,19 @@ public class HomesAPI {
     }
 
     public Location getHomeFromMap(Player player, String HomeName) {
-        this.fixMaps(player.getUniqueId());
+        this.fixMaps(player.getUniqueId(), true);
 
         return rawHomesMap.get(player.getUniqueId()).get(HomeName);
     }
 
     public Location getHomeFromMap(UUID uuid, String HomeName) {
-        this.fixMaps(uuid);
+        this.fixMaps(uuid, true);
 
         return rawHomesMap.get(uuid).get(HomeName);
     }
 
     public void removeHome(ISQL isql, Player player, String HomeName) {
-        this.fixMaps(player.getUniqueId());
+        this.fixMaps(player.getUniqueId(), true);
 
         rawHomesMap.get(player.getUniqueId()).remove(HomeName.toLowerCase());
 
@@ -113,7 +113,7 @@ public class HomesAPI {
     }
 
     public String listHomesInMap(Player player) {
-        this.fixMaps(player.getUniqueId());
+        this.fixMaps(player.getUniqueId(), true);
 
         Set<String> homeSet = rawHomesMap.get(player.getUniqueId()).keySet();
         String[] homeString = homeSet.toArray(new String[0]);
@@ -124,7 +124,7 @@ public class HomesAPI {
     }
 
     public void setHome(ISQL isql, Player player, String HomeName) {
-        this.fixMaps(player.getUniqueId());
+        this.fixMaps(player.getUniqueId(), true);
 
         rawHomesMap.get(player.getUniqueId()).put(HomeName.toLowerCase(), player.getLocation());
 
@@ -132,7 +132,7 @@ public class HomesAPI {
     }
 
     public void setHome(ISQL isql, UUID uuid, String PlayerName, String HomeName, Location location) {
-        this.fixMaps(uuid);
+        this.fixMaps(uuid, true);
 
         rawHomesMap.get(uuid).put(HomeName.toLowerCase(), location);
 
@@ -207,19 +207,21 @@ public class HomesAPI {
         }
     }
 
-    private void fixMaps(UUID uuid) {
+    private void fixMaps(UUID uuid, boolean getAllHomesFromISQL) {
         if (rawHomesMap == null) {
             rawHomesMap = new HashMap<>();
         }
-        rawHomesMap.computeIfAbsent(uuid, k -> new HashMap<>());
 
-        Player player = Bukkit.getServer().getPlayer(uuid);
-        if (player == null || !player.isOnline()) {
-            return;
+        if (rawHomesMap.get(uuid) == null) {
+            rawHomesMap.put(uuid, new HashMap<>());
+            if (getAllHomesFromISQL) {
+                Player player = Bukkit.getServer().getPlayer(uuid);
+                if (player == null || !player.isOnline()) {
+                    return;
+                }
+                this.getAllHomesFromISQL(isql, player);
+            }
         }
 
-        if (rawHomesMap.get(uuid).isEmpty()) {
-            this.getAllHomesFromISQL(isql, player);
-        }
     }
 }
